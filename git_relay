@@ -1,0 +1,29 @@
+#!/bin/bash
+
+TreeRoot=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+TreeBranches=$TreeRoot/branches
+
+if [ -z  "$1" ]
+then
+    echo "Must provide args try: status|pull|difftool|diff"
+    exit 1
+fi
+
+case $1 in
+    status|pull|difftool|diff)
+        echo executing supported cmd:
+        ;;
+    *)
+        echo unsupported command: $1
+        ;;
+esac
+
+AllBranches=$(ls -laF $TreeBranches | tail -n +4 | awk -v base=$TreeBranches '{print base"/"$NF}' )
+for Branch in $TreeRoot $AllBranches
+do
+    Cmd="git -C $Branch $@"
+    echo -e "\n***\n$Branch\nEXECUTING: $Cmd \n"
+    $Cmd
+done
+#| xargs -I x -n1 git -C branches/x $@
+#| awk '{print $NF}'
