@@ -16,7 +16,7 @@ then
 fi
 
 export Branches
-Branches="$SharcDir/branches"
+Branches="$SharcDir/.branches"
 export StateDir
 StateDir="$SharcDir/.state"
 export MainRC
@@ -57,7 +57,9 @@ function _unpack_nested_aliases() {
     for NestedDir in $NestedDirs
     do
         #odd looking so it stays system agnostic:
-        AliasList="$AliasList $(ls -laF "$NestedDir" | tail -n +2 | grep -v / | grep -v README.md | awk -v RootDir=$NestedDir/ '{print RootDir $NF}')"
+        #AliasList="$AliasList $(ls -laF "$NestedDir" | tail -n +2 | grep -v "/\|README.md\|/\." | awk -v RootDir=$NestedDir/ '{print RootDir $NF}')"
+        AliasList="$AliasList $(ls -lF "$NestedDir" | tail -n +2 | grep -v "/\|README.md" | awk -v RootDir=$NestedDir/ '{print RootDir $NF}')" 
+     #| grep -v "$NestedDir/\."
     done
     echo "$AliasList" | sed 's/[^ ]*\.swp/ /g'
 }
