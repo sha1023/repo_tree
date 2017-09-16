@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TreeRoot=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-TreeBranches=$TreeRoot/branches
+TreeBranches=$TreeRoot/.branches
 
 if [ -z  "$1" ]
 then
@@ -18,7 +18,7 @@ case $1 in
         ;;
 esac
 
-AllBranches=$(ls -laF $TreeBranches | tail -n +4 | awk -v base=$TreeBranches '{print base"/"$NF}' )
+AllBranches=$(ls -lF $TreeBranches | tail -n +2 | awk -v base=$TreeBranches '{print base"/"$NF}' )
 for Branch in $TreeRoot $AllBranches
 do
     Cmd="git -C $Branch $@"
