@@ -53,7 +53,7 @@ function _error_echo() {
 function _unpack_nested_aliases() {
     local AliasList
     local NestedDirs
-    NestedDirs=$(find $Branches -type d -not -path "*/.*")
+    NestedDirs=$(find $Branches -type d -not -path "$Branches/*/.*")
     for NestedDir in $NestedDirs
     do
         #odd looking so it stays system agnostic:
